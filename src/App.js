@@ -1,25 +1,61 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import UserForm from './components/UserForm';
+import UserCard from './components/UserCard';
+import { createUser, deleteUserById, fetchAllUsers } from "./redux/crudSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
+
+  const [newUser, setNewUser] = useState({});
+  const [deleteId, setDeleteId] = useState('');
+  const [editDefValues, setEditDefValues] = useState({});
+  const [isEdited, setIsEdited] = useState(false);
+
+  const dispatch = useDispatch();
+  const { list } = useSelector(state => state.user);
+
+  useEffect(() => {
+    dispatch(fetchAllUsers())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (newUser.first_name) {
+      dispatch(createUser(newUser))
+    }
+  }, [newUser, dispatch])
+
+  useEffect(() => {
+    if (deleteId) {
+      dispatch(deleteUserById(deleteId))
+    }
+  }, [deleteId, dispatch]);
+
+  const handlerOnCreateUser = (event) => {
+    setNewUser(event)
+  };
+
+  const handlerOnDelete = (id) => {
+    setDeleteId(id)
+  };
+
+  const handlerOnEdit = (userObj) => {
+    setEditDefValues(userObj)
+    setIsEdited(true)
+  };
+
+  const userList = list.map((user) => <UserCard userObj={user} onDelete={handlerOnDelete} onEdit={handlerOnEdit} key={user.id} />);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <span>
+        {userList}
+      </span>
+      <span>
+        <UserForm onCreate={handlerOnCreateUser} onEdit={handlerOnEdit} defValues={editDefValues} isEdited={isEdited} setIsEdited={setIsEdited} />
+      </span>
     </div>
-  );
-}
+  )
+};
 
 export default App;
