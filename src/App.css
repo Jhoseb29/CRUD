@@ -1,5 +1,6 @@
 .App {
-  background-color: #299494;
+  background: rgb(63,94,251);
+  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
   min-height: 100vh;
   display: flex;
   justify-content: space-between;
@@ -10,7 +11,12 @@
 .App span:nth-child(2) {
   min-height: 100vh;
   padding: 50px;
-  background-color: #fff;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .App span:nth-child(1) {
@@ -37,10 +43,10 @@
 }
 
 .user-field input {
-  background-color: lightgray;
   border: 10px solid rgb(255, 255, 255);
-  border-radius: 40px;
+  border-radius: 8px;
   text-align: center;
+  margin: 10px;
   padding: 10px 0px;
   flex-grow: 1;
 }
@@ -52,12 +58,14 @@
 }
 
 #submit {
-  margin-top: 20px;
+  margin: 10px;
   background-color: rgb(87, 114, 238);
-  border: 20px solid #fff;
-  border-radius: 40px;
+  border: 1px solid #fff;
+  border-radius: 8px;
   padding: 10px 50px;
   color: #fff;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* UserCard */
